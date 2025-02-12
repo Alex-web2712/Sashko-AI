@@ -1,3 +1,21 @@
+// Cookie Consent elements
+const cookieConsent = document.getElementById('cookie-consent');
+const acceptButton = document.getElementById('accept-cookies');
+
+// Cookie Consent Logic
+const hasConsent = document.cookie.includes('myCookieName=true'); // Replace 'myCookieName'
+
+if (!hasConsent) {
+    cookieConsent.classList.remove('hidden');
+} else {
+    cookieConsent.classList.add('hidden');
+}
+
+acceptButton.addEventListener('click', () => {
+    cookieConsent.classList.add('hidden');
+    document.cookie = 'myCookieName=true; path=/'; // Session cookie
+});
+
 // Function to handle user input and get AI response
 async function askQuestion() {
     const userInput = document.getElementById('questionInput').value;
