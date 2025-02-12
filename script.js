@@ -1,71 +1,64 @@
-// Get elements from the document
-const chatbox = document.getElementById('chatbox');
-const questionInput = document.getElementById('questionInput');
-const responses = document.getElementById('responses');
-const sendButton = document.getElementById('send-button');
+document.addEventListener('DOMContentLoaded', () => {
+    const chatArea = document.getElementById('chat-area');
+    const userInput = document.getElementById('user-input'); // Fix ID
+    const sendButton = document.getElementById('send-button'); 
+    const cookieConsent = document.getElementById('cookie-consent');
+    const acceptButton = document.getElementById('accept-cookies');
 
-// Cookie Consent elements
-const cookieConsent = document.getElementById('cookie-consent');
-const acceptButton = document.getElementById('accept-cookies');
-
-// Check if user has accepted cookies
-const hasConsent = document.cookie.includes('myCookieName=true');
-
-if (!hasConsent) {
-    cookieConsent.classList.remove('hidden');
-} else {
-    cookieConsent.classList.add('hidden');
-}
-
-// Handle cookie acceptance
-acceptButton.addEventListener('click', () => {
-    cookieConsent.classList.add('hidden');
-    document.cookie = 'myCookieName=true; path=/'; // Set session cookie
-});
-
-// Function to handle user input and get AI response
-async function askQuestion() {
-    const userInput = questionInput.value.trim();
-
-    if (!userInput) return; // Don't process empty input
-
-    // Add user message to the chat
-    const userMessage = document.createElement('div');
-    userMessage.textContent = `Въпрос: ${userInput}`;
-    userMessage.classList.add('user-message');
-    responses.appendChild(userMessage);
-
-    // Clear the input field
-    questionInput.value = '';
-
-    // Call the Cloudflare Worker API
-    try {
-        const response = await fetch(`https://my-chatbot.alex-r-goranov1.workers.dev/api/chat?q=${encodeURIComponent(userInput)}`);
-        const data = await response.json();
-
-        // Add AI response to the chat
-        const aiMessage = document.createElement('div');
-        aiMessage.textContent = `Сашко отговор: ${data.response}`;
-        aiMessage.classList.add('ai-message');
-        responses.appendChild(aiMessage);
-
-        // Scroll to the bottom to show new messages
-        chatbox.scrollTop = chatbox.scrollHeight;
-    } catch (error) {
-        const errorMessage = document.createElement('div');
-        errorMessage.textContent = 'Грешка: Не успяхме да получим отговор от Сашко!';
-        errorMessage.classList.add('ai-message');
-        responses.appendChild(errorMessage);
+    if (!sendButton) {
+        console.error("⚠️ ERROR: 'send-button' not found in the HTML.");
+        return;
     }
-}
 
-// Add event listener for send button click
-sendButton.addEventListener('click', askQuestion);
+    sendButton.addEventListener('click', askQuestion);
 
-// Allow pressing "Enter" to send message
-questionInput.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter') {
-        askQuestion();
+    // Handle cookie consent
+    const hasConsent = document.cookie.includes('myCookieName=true'); 
+    if (!hasConsent) {
+        cookieConsent.classList.remove('hidden');
+    }
+
+    acceptButton.addEventListener('click', () => {
+        cookieConsent.classList.add('hidden');
+        document.cookie = 'myCookieName=true; path=/';
+    });
+
+    async function askQuestion() {
+        if (!userInput) {
+            console.error("⚠️ ERROR: 'user-input' not found in the HTML.");
+            return;
+        }
+
+        const userMessage = userInput.value.trim();
+        if (!userMessage) return; 
+
+        // Add user message
+        const userDiv = document.createElement('div');
+        userDiv.textContent = `You: ${userMessage}`;
+        userDiv.classList.add('user-message');
+        chatArea.appendChild(userDiv);
+
+        // Clear input
+        userInput.value = '';
+
+        // Fetch AI response
+        try {
+            const response = await fetch(`https://my-chatbot.alex-r-goranov1.workers.dev/api/chat?q=${encodeURIComponent(userMessage)}`);
+            const data = await response.json();
+
+            const aiDiv = document.createElement('div');
+            aiDiv.textContent = `Sparky: ${data.response}`;
+            aiDiv.classList.add('ai-message');
+            chatArea.appendChild(aiDiv);
+
+            chatArea.scrollTop = chatArea.scrollHeight;
+        } catch (error) {
+            console.error("⚠️ Fetch error:", error);
+            const errorDiv = document.createElement('div');
+            errorDiv.textContent = 'Error: Unable to get a response from Sparky!';
+            errorDiv.classList.add('ai-message');
+            chatArea.appendChild(errorDiv);
+        }
     }
 });
 
