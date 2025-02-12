@@ -3,7 +3,6 @@ body {
     font-family: sans-serif;
     overflow: hidden;
     background-color: #f0f0f0;
-    overflow-x: hidden;
 }
 
 .background {
@@ -21,7 +20,7 @@ body {
 .container {
     display: flex;
     flex-direction: column;
-    width: 80%; /* Adjusted width */
+    width: 90%; /* Slightly reduced for better spacing */
     max-width: 900px;
     margin: 20px auto;
     padding: 20px;
@@ -30,8 +29,8 @@ body {
     border-radius: 15px;
     background-color: rgba(255, 255, 255, 0.5);
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
-    min-height: 500px; /* Minimum height */
-    height: 90vh; /* Adjusted height */
+    min-height: 500px;
+    height: 90vh;
 }
 
 header {
@@ -47,7 +46,7 @@ header h1 {
 }
 
 .chat-area {
-    flex: 1; /* Takes up available space */
+    flex: 1;
     overflow-y: auto;
     border: 1px solid #ccc;
     background-color: rgba(255, 255, 255, 0.7);
@@ -115,24 +114,26 @@ header h1 {
     display: none;
 }
 
+/* Mobile responsiveness */
 @media (max-width: 768px) {
     .container {
-        width: 95%;
-        height: 90vh;
-        margin: 10px auto;
+        width: 100%;
+        padding: 15px;
         font-size: 0.9em;
+        height: 85vh; /* Slightly adjusted to fit better */
     }
 
     header {
-        font-size: 1.2em;
+        font-size: 1.3em;
     }
 
     header h1 {
-        font-size: 1.5em;
+        font-size: 1.6em;
     }
 
     .input-area {
         flex-direction: column;
+        gap: 10px; /* Adds a small gap between the input and the button */
     }
 
     #user-input {
@@ -141,6 +142,11 @@ header h1 {
     }
 
     #send-button {
+        width: 100%; /* Make button full width on smaller screens */
         border-radius: 5px;
+    }
+
+    .chat-area {
+        max-height: 60vh; /* Makes chat area smaller on mobile to fit better */
     }
 }
