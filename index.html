@@ -1,20 +1,26 @@
 <!DOCTYPE html>
-<html lang="bg">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My New AI</title>
-    <link rel="stylesheet" href="https://my-chatbot.alex-r-goranov1.workers.dev/style.css">
+    <title>AI Chat</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="background"></div>
     <div class="container">
-        <h1>Welcome to my new AI!</h1>
-        <div id="chatbox">
-            <div id="responses"></div> <!-- Място за отговорите -->
+        <header>
+            <h1>Let's chat with Sparky</h1>
+        </header>
+        <div class="chat-area" id="chat-area"></div>
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="Type your message...">
+            <button id="send-button">Send</button>
         </div>
-        <input type="text" id="questionInput" placeholder="Ask me something..." />
-        <button onclick="askQuestion()">Ask me</button>
+
+        <div id="cookie-consent" class="cookie-consent">  <p>This website uses cookies to ensure you get the best experience on our website. <a href="#">Learn more</a></p>
+            <button id="accept-cookies">Accept Cookies</button>
+        </div>
+
     </div>
-    <script src="https://my-chatbot.alex-r-goranov1.workers.dev/script.js"></script>
-</body>
+
+    <script src="script.js"></script> </body>
 </html>
