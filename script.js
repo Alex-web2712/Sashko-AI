@@ -2,7 +2,7 @@
 const chatbox = document.getElementById('chatbox');
 const questionInput = document.getElementById('questionInput');
 const responses = document.getElementById('responses');
-const sendButton = document.getElementById('sendButton');
+const sendButton = document.getElementById('send-button');
 
 // Cookie Consent elements
 const cookieConsent = document.getElementById('cookie-consent');
