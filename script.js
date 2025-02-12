@@ -1,3 +1,4 @@
+const sendButton = document.getElementById('sendButton');
 // Cookie Consent elements
 const cookieConsent = document.getElementById('cookie-consent');
 const acceptButton = document.getElementById('accept-cookies');
